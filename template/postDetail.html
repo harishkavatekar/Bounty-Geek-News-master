@@ -1,0 +1,17 @@
+<!-- Storing the URL of each post -->
+<div class="each-post-detail">
+	<div class="heading">Submit your comments</div>
+	<div class="info">
+		{{message}}
+	</div>
+	<div class="error-msg">
+		{{msg}}
+	</div>
+	<form>
+		<input type="text" name="tag" ng-model="post_detail.tag" class="tag" placeholder="Tags" required>
+		<textarea rows="5" name="message" ng-model="post_detail.comment" class="comment" placeholder="Comments"></textarea>
+		<input type="button" name="save" value="Submit" ng-click="saveLink()" ng-disabled="isClicked" class="submit-button">
+	</form>
+	<br/><br/>
+	<input type="button" name="Back" value="Back" class="back" ng-click="redirect('/')">
+</div>

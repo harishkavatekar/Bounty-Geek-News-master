@@ -1,0 +1,28 @@
+<!-- Fetching all the posts details. -->
+		<div class="heading">List of post details</div>
+		<table>
+			<thead>
+				<tr>
+					<th>User ID</th>
+					<th>Username</th>
+					<th>Title</th>
+					<th>Type</th>
+					<th>Url</th>
+					<th>Time</th>
+					<th>Score</th>
+					<th>Save favourite link</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="post_detail in post_details track by post_detail.id" ng-if="post_detail.score > 250">
+					<td>{{post_detail.id}}</td>
+					<td>{{post_detail.by}}</td>
+					<td>{{post_detail.title}}</td>
+					<td>{{post_detail.type}}</td>
+					<td><a href="{{user_detail.url}}" target="_blank">{{post_detail.url}}</a></td>
+					<td>{{post_detail.time | date: "hh:mm a"}}</td>
+					<td>{{post_detail.score}}</td>
+					<td><a href="postDetail/{{post_detail.id}}" class="save-button">Save</a></td>
+				</tr>
+			</tbody>
+		</table>
