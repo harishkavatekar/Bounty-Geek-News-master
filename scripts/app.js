@@ -18,6 +18,10 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 })
 
+app.filter('recent_post',function(post){
+	
+})
+
 //attaching a module to the controller
 app.controller('myController', function($scope, $http, $log, $sce, $localStorage){
 	//getting the url for the top stories which gives IDs of all the posts
@@ -33,7 +37,7 @@ app.controller('myController', function($scope, $http, $log, $sce, $localStorage
 		 .then(function(response){
 			id_list = response.data;
 			$scope.id_list = id_list;
-			console.log($scope.id_list)
+			// console.log($scope.id_list)
 
 			for(i = 0; i < $scope.id_list.length; i++){
 				var index = $scope.id_list[i]
@@ -56,6 +60,35 @@ app.controller('myController', function($scope, $http, $log, $sce, $localStorage
 			$scope.error = reason.data;
 			$log.info(reason);
 		})
+
+		 $scope.recent_post = function(items){
+		 	$scope.showPost = true;
+		 	$scope.showRecentPost = true;
+		 	$scope.recentPost_details = {};
+		 	var i;
+		 	var time;
+		 	var date;
+		 	var eachRecentPost_details = {};
+		 	// console.log(items);
+		 	for (i=0; i< items.length; i++){
+		 		
+	 			eachRecentPost_details = items;
+	 			time = eachRecentPost_details[i].time;
+	 			date = new Date(time * 1000);
+	 			time = date;
+	 			eachRecentPost_details[i].time = time;
+	 			var prevDays = new Date(date);
+	 			prevDays.setDate(date.getDate() - 1);
+	 			prevDays.getDate();
+	 			// console.log(eachRecentPost_details[i].time);
+	 			if(eachRecentPost_details[i].time > prevDays) {
+	 				console.log(eachRecentPost_details[i]);
+	 				// $scope.recentPost_details = eachRecentPost_details[i].time;
+	 				console.log($scope.recentPost_details);
+	 			}
+		 	}
+		 	
+		 }
 		
 });
 
@@ -100,7 +133,8 @@ app.controller('postController', function($scope, $http, $routeParams, $sce, $lo
 			}
 		 	$localStorage.fav_link = $localStorage.data;
 		 	$scope.storage_details.push($localStorage.fav_link);
-		 	console.log($localStorage.data.length);
+		 	// console.log($localStorage.data.length);
+		 	console.log($localStorage.data);
 		 	$scope.isClicked = true;
 		 	if($scope.isClicked){
 		 		$scope.message = "Your comments are saved";

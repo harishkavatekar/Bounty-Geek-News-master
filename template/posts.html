@@ -1,28 +1,60 @@
 <!-- Fetching all the posts details. -->
 		<div class="heading">List of post details</div>
-		<table>
-			<thead>
-				<tr>
-					<th>User ID</th>
-					<th>Username</th>
-					<th>Title</th>
-					<th>Type</th>
-					<th>Url</th>
-					<th>Time</th>
-					<th>Score</th>
-					<th>Save favourite link</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="post_detail in post_details track by post_detail.id" ng-if="post_detail.score > 250">
-					<td>{{post_detail.id}}</td>
-					<td>{{post_detail.by}}</td>
-					<td>{{post_detail.title}}</td>
-					<td>{{post_detail.type}}</td>
-					<td><a href="{{user_detail.url}}" target="_blank">{{post_detail.url}}</a></td>
-					<td>{{post_detail.time | date: "hh:mm a"}}</td>
-					<td>{{post_detail.score}}</td>
-					<td><a href="postDetail/{{post_detail.id}}" class="save-button">Save</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="recent-post" ng-click="recent_post(post_details)">Recent posts</div>
+		<div class="clearfix"></div>
+		<div class="recent-post-details" ng-show="showRecentPost">
+			<table>
+				<thead>
+					<tr>
+						<th>User ID</th>
+						<th>Username</th>
+						<th>Title</th>
+						<th>Type</th>
+						<th>Url</th>
+						<th>Time</th>
+						<th>Score</th>
+						<th>Save favourite link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="recentPost_detail in recentPost_details track by $index">
+						<td>{{recentPost_detail.id}}</td>
+						<td>{{recentPost_detail.by}}</td>
+						<td>{{recentPost_detail.title}}</td>
+						<td>{{recentPost_detail.type}}</td>
+						<td><a href="{{user_detail.url}}" target="_blank">{{recentPost_detail.url}}</a></td>
+						<td>{{recentPost_detail.time * 1000 | date: "M/d/yy h:mm a"}}</td>
+						<td>{{recentPost_detail.score}}</td>
+						<td><a href="recentPost_detail/{{recentPost_detail.id}}" class="save-button">Save</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="post-details" ng-hide="showPost">
+			<table>
+				<thead>
+					<tr>
+						<th>User ID</th>
+						<th>Username</th>
+						<th>Title</th>
+						<th>Type</th>
+						<th>Url</th>
+						<th>Time</th>
+						<th>Score</th>
+						<th>Save favourite link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="post_detail in post_details track by post_detail.id" ng-if="post_detail.score > 250">
+						<td>{{post_detail.id}}</td>
+						<td>{{post_detail.by}}</td>
+						<td>{{post_detail.title}}</td>
+						<td>{{post_detail.type}}</td>
+						<td><a href="{{user_detail.url}}" target="_blank">{{post_detail.url}}</a></td>
+						<td>{{post_detail.time * 1000 | date: "M/d/yy h:mm a"}}</td>
+						<td>{{post_detail.score}}</td>
+						<td><a href="postDetail/{{post_detail.id}}" class="save-button">Save</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>

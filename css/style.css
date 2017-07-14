@@ -37,6 +37,8 @@ tr:nth-child(odd) td {
 	color: #46555f;
 	font-size: 18px;
 	margin-bottom: 20px;
+    float: left;
+    padding-right: 30px;
 }
 .post-page {
 	padding: 30px 20px;
@@ -82,4 +84,14 @@ tr:nth-child(odd) td {
 .each-post-detail .back:hover {
 	background: none;
 	color: #46555f;
+}
+.recent-post {
+	cursor: pointer;
+	color: #46555f;
+	font-size: 18px;
+	margin-bottom: 20px;
+	opacity: 0.5
+}
+.recent-post:hover {
+	opacity: 1;
 }
