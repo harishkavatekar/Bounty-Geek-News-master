@@ -23,7 +23,7 @@ app.filter('recent_post',function(post){
 })
 
 //attaching a module to the controller
-app.controller('myController', function($scope, $http, $log, $sce, $localStorage){
+app.controller('myController', function($scope, $http, $log, $sce, $localStorage,$rootScope){
 	//getting the url for the top stories which gives IDs of all the posts
 	var url = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty'
 	var trustedUrl = $sce.trustAsResourceUrl(url);
@@ -85,17 +85,44 @@ app.controller('myController', function($scope, $http, $log, $sce, $localStorage
 		 	
 	 	}
 
-	 	$scope.showComments = function(){
-	 		$scope.comments = true;
-	 		console.log($scope.storage_details);
-			$scope.comment = $localStorage.data.comment;
+	 	$scope.showComments = function(id, pIndex){
+	 		var i;
+		 	var index = $localStorage.data.findIndex(function(curObject,index){
+			if(index >=0 && id == curObject.id){
+				// console.log("===", curObject);
+				$scope.post_details[pIndex].comment = $localStorage.data[index].comment;
+				console.log("Old Comment =", $localStorage.data[index].comment);
+				$scope.post_details[pIndex].showcomment = true;
+				$scope.showInput = true;
+				$scope.showUpdate = true;
+				} else {
+					$scope.post_details[pIndex].msg = "No comments for this post yet. Please click on save enter your comments";
+					$scope.post_details[pIndex].showcomment = true;
+					$scope.showInput = false;
+					$scope.showUpdate = false;
+				}
+			});
 		}
+
+		$scope.saveComment = function(id, pIndex){
+	 		var i;
+		 	var index = $localStorage.data.findIndex(function(curObject,index){
+			if(index >=0 && id == curObject.id){
+				// console.log("===", curObject);
+				$localStorage.data[index].comment = $scope.post_details[pIndex].comment
+				console.log("New Comment =", $localStorage.data[index].comment);
+				$scope.post_details[pIndex].showcomment = false;
+				}
+			});
+		 	
+		}
+
 		
 });
 
 //Getting the data of each post in this controller and storing the information locally
-app.controller('postController', function($scope, $http, $routeParams, $sce, $localStorage, $location){
-	$scope.storage_details = [];
+app.controller('postController', function($scope, $http, $routeParams, $sce, $localStorage, $location, $rootScope){
+	$rootScope.storage_details = [];
 	$scope.post_detail = {};
 	console.log($routeParams);
 	
@@ -118,24 +145,23 @@ app.controller('postController', function($scope, $http, $routeParams, $sce, $lo
 			var i;
 			var found = false;
 		 	
-		 	// console.log($scope.post_detail.url);
-		 	// console.log($scope.post_detail.tag);
-		 	// console.log($scope.post_detail.comment);
 		 	for(i = 0; i< $localStorage.data.length; i++){
 		 		console.log($localStorage.data[i].id);
 		 		console.log($scope.post_detail.id);
 		 		if($localStorage.data[i].id == $scope.post_detail.id){
 		 			found = true;
+		 			$scope.post_detail = $localStorage.data[i];
 		 			console.log(found);
+
 		 		}
 		 	}
 		 	if(!found) {
 			 	$localStorage.data.push({id:$scope.post_detail.id, url:$scope.post_detail.url, tag:$scope.post_detail.tag, comment:$scope.post_detail.comment});
-			}
+			} 
 		 	$localStorage.fav_link = $localStorage.data;
-		 	$scope.storage_details.push($localStorage.fav_link);
+		 	$rootScope.storage_details.push($localStorage.fav_link);
 		 	// console.log($localStorage.data.length);
-		 	console.log($scope.storage_details);
+		 	console.log($rootScope.storage_details);
 		 	$scope.isClicked = true;
 		 	if($scope.isClicked){
 		 		$scope.message = "Your comments are saved";
@@ -146,4 +172,6 @@ app.controller('postController', function($scope, $http, $routeParams, $sce, $lo
 		$scope.redirect = function(path){
 			$location.path(path)
 		}
+
+		
 })

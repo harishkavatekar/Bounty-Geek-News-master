@@ -55,8 +55,11 @@
 						<td>{{post_detail.score}}</td>
 						<td>
 							<a href="postDetail/{{post_detail.id}}" class="save-button">Save</a>
-							<!-- <div style="margin-top: 20px;" ng-click="showComments()">Show</div>
-							<span ng-show="comments">{{comment}}</span> -->
+							<div style="margin-top: 20px;" ng-click="showComments(post_detail.id, $index)">Show</div>
+							<div  ng-show="post_detail.showcomment == true">
+								<input type="text" name="comment" ng-model="post_detail.comment" ng-show="showInput"> {{post_detail.msg}}
+								<input type="button" name="updateComment" ng-click="saveComment(post_detail.id, $index)"  value="Update" ng-show="showUpdate"/>
+							</div>
 							<!-- <span>Update</span> -->
 						</td>
 					</tr>
