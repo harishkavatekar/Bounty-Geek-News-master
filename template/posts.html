@@ -17,13 +17,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="recentPost_detail in recentPost_details track by $index">
+					<tr ng-repeat="recentPost_detail in recentPost_details track by $index" ng-if="(recentPost_detail.time > prevDays) && (recentPost_detail.score > 250)">
 						<td>{{recentPost_detail.id}}</td>
 						<td>{{recentPost_detail.by}}</td>
 						<td>{{recentPost_detail.title}}</td>
 						<td>{{recentPost_detail.type}}</td>
 						<td><a href="{{user_detail.url}}" target="_blank">{{recentPost_detail.url}}</a></td>
-						<td>{{recentPost_detail.time * 1000 | date: "M/d/yy h:mm a"}}</td>
+						<td>{{recentPost_detail.time | date: "M/d/yy h:mm a"}}</td>
 						<td>{{recentPost_detail.score}}</td>
 						<td><a href="recentPost_detail/{{recentPost_detail.id}}" class="save-button">Save</a></td>
 					</tr>
@@ -53,7 +53,12 @@
 						<td><a href="{{user_detail.url}}" target="_blank">{{post_detail.url}}</a></td>
 						<td>{{post_detail.time * 1000 | date: "M/d/yy h:mm a"}}</td>
 						<td>{{post_detail.score}}</td>
-						<td><a href="postDetail/{{post_detail.id}}" class="save-button">Save</a></td>
+						<td>
+							<a href="postDetail/{{post_detail.id}}" class="save-button">Save</a>
+							<!-- <div style="margin-top: 20px;" ng-click="showComments()">Show</div>
+							<span ng-show="comments">{{comment}}</span> -->
+							<!-- <span>Update</span> -->
+						</td>
 					</tr>
 				</tbody>
 			</table>

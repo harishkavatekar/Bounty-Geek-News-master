@@ -64,31 +64,32 @@ app.controller('myController', function($scope, $http, $log, $sce, $localStorage
 		 $scope.recent_post = function(items){
 		 	$scope.showPost = true;
 		 	$scope.showRecentPost = true;
-		 	$scope.recentPost_details = {};
+		 	$scope.recentPost_details = [];
 		 	var i;
 		 	var time;
 		 	var date;
+		 	var date1 = new Date();
 		 	var eachRecentPost_details = {};
-		 	// console.log(items);
+		 	var prevDays = new Date(date1);
+ 			prevDays.setDate(date1.getDate() - 2);
+ 			$scope.prevDays = prevDays;
 		 	for (i=0; i< items.length; i++){
-		 		
 	 			eachRecentPost_details = items;
 	 			time = eachRecentPost_details[i].time;
 	 			date = new Date(time * 1000);
 	 			time = date;
 	 			eachRecentPost_details[i].time = time;
-	 			var prevDays = new Date(date);
-	 			prevDays.setDate(date.getDate() - 1);
-	 			prevDays.getDate();
-	 			// console.log(eachRecentPost_details[i].time);
-	 			if(eachRecentPost_details[i].time > prevDays) {
-	 				console.log(eachRecentPost_details[i]);
-	 				// $scope.recentPost_details = eachRecentPost_details[i].time;
-	 				console.log($scope.recentPost_details);
-	 			}
+ 				$scope.recentPost_details.push(eachRecentPost_details[i]);
+ 				console.log($scope.recentPost_details);
 		 	}
 		 	
-		 }
+	 	}
+
+	 	$scope.showComments = function(){
+	 		$scope.comments = true;
+	 		console.log($scope.storage_details);
+			$scope.comment = $localStorage.data.comment;
+		}
 		
 });
 
@@ -134,7 +135,7 @@ app.controller('postController', function($scope, $http, $routeParams, $sce, $lo
 		 	$localStorage.fav_link = $localStorage.data;
 		 	$scope.storage_details.push($localStorage.fav_link);
 		 	// console.log($localStorage.data.length);
-		 	console.log($localStorage.data);
+		 	console.log($scope.storage_details);
 		 	$scope.isClicked = true;
 		 	if($scope.isClicked){
 		 		$scope.message = "Your comments are saved";
