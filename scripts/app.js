@@ -88,6 +88,8 @@ app.controller('myController', function($scope, $http, $log, $sce, $localStorage
 	 	$scope.showComments = function(id, pIndex){
 	 		var i;
 		 	var index = $localStorage.data.findIndex(function(curObject,index){
+		 		console.log(index);
+		 		console.log(curObject);
 			if(index >=0 && id == curObject.id){
 				// console.log("===", curObject);
 				$scope.post_details[pIndex].comment = $localStorage.data[index].comment;
